@@ -1,9 +1,12 @@
+"""
+GitHub link: https://github.com/alorthius/lab_1_html_map
+"""
 import folium
 
 from math import sqrt, sin, cos, asin, radians
 
 from folium.plugins import MarkerCluster
-from haversine import haversine
+
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 from geopy.exc import GeocoderUnavailable
@@ -149,7 +152,7 @@ def find_coordinates(films_dict: dict, users_coordinates: tuple) -> dict:
 
     for film_title, all_addresses in films_dict.items():
         for film_address in all_addresses:
-            
+
             try:
                 location = geolocator.geocode(film_address)
                 latitude, longitude = location.latitude, location.longitude
@@ -181,13 +184,26 @@ def create_map(coordinates_dict: dict, keys_list: list, users_coordinates: tuple
                                icon=folium.Icon(color='darkred', icon='flag')))
 
     films_loc = MarkerCluster(name='films locations').add_to(map)
-    
+
     for tup in keys_list:
         folium.Marker(location=[tup[0], tup[1]],
                       popup=str(coordinates_dict[tup])[2:-2],
                       icon=folium.Icon(color='darkpurple', icon='film')).add_to(films_loc)
-
     map.add_child(fg)
+
+    fg_pp = folium.FeatureGroup(name="Countries population")
+    fg_pp.add_child(folium.GeoJson(data=open('D:\\Documents\\Projects_Python\\2_semester\\lab_2\\task_2_html_map\\world.json', 'r', encoding='utf-8-sig').read(),
+                                   style_function=lambda x:
+                                   {'fillColor': 'red' if x['properties']['POP2005'] < 10000000
+                                    else 'orange' if 10000000 <= x['properties']['POP2005'] < 20000000
+                                    else 'green' if 20000000 <= x['properties']['POP2005'] < 50000000
+                                    else 'blue',
+                                    'fillOpacity': 0.1}))
+    map.add_child(fg_pp)
+
+    map.add_child(fg_pp)
+    map.add_child(folium.LayerControl())
+
     map.save('Your_map_here.html')
     print('Finished. Check file Your_map_here.html')
 
@@ -206,16 +222,11 @@ def main_func(path: str, users_year: int, users_coordinates: tuple):
 if __name__ == "__main__":
     geolocator = Nominatim(user_agent="my")
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=0.5)
-    test_path = 'D:\\Documents\\Projects_Python\\2_semester\\lab_2\\task_2_html_map\\test1.txt'
-    path_2 = 'D:\\Documents\\Projects_Python\\2_semester\\lab_2\\task_2_html_map\\test2.txt'
-    main_path = 'D:\\Documents\\Projects_Python\\2_semester\\lab_2\\task_2_html_map\\locations.list'
-    users_year = 1999
-    users_coordinates = (50.4216283, 38.7870889)
-    # path = str(input('Type path to the file locations.list: '))
-    # users_year = int(input('Type the year of film release: '))
-    # latitude = float(input('Type the latitude coordinate as float (e.x. 50.4216283): '))
-    # longitude = float(input('Type the longitude coordinate as float (e.x. 38.7870889): '))
-    # users_coordinates = (latitude, longitude)
-    main_func(path_2, users_year, users_coordinates)
-    # import doctest
-    # doctest.testmod()
+
+    path = str(input('Type path to the file locations.list: '))
+    users_year = int(input('Type the year of film release: '))
+    latitude = float(input('Type the latitude coordinate as float (e.x. 50.4216283): '))
+    longitude = float(input('Type the longitude coordinate as float (e.x. 38.7870889): '))
+    users_coordinates = (latitude, longitude)
+
+    main_func(path, users_year, users_coordinates)
