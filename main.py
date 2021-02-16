@@ -177,13 +177,16 @@ def create_map(coordinates_dict: dict, keys_list: list, users_coordinates: tuple
 
     fg = folium.FeatureGroup(name="My map")
     fg.add_child(folium.Marker(location=[users_coordinates[0], users_coordinates[1]],
-                                   popup='Here are you!',
-                                   icon=folium.Icon(color='darkred', icon='flag')))
+                               popup='Here are you!',
+                               icon=folium.Icon(color='darkred', icon='flag')))
 
+    films_loc = MarkerCluster(name='films locations').add_to(map)
+    
     for tup in keys_list:
-        fg.add_child(folium.Marker(location=[tup[0], tup[1]],
-                                   popup=str(coordinates_dict[tup])[2:-2],
-                                   icon=folium.Icon(color='darkpurple', icon='film')))
+        folium.Marker(location=[tup[0], tup[1]],
+                      popup=str(coordinates_dict[tup])[2:-2],
+                      icon=folium.Icon(color='darkpurple', icon='film')).add_to(films_loc)
+
     map.add_child(fg)
     map.save('Your_map_here.html')
     print('Finished. Check file Your_map_here.html')
