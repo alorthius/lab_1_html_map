@@ -6,6 +6,8 @@ The user enters the year, when he wants films to be found, and his location coor
 
 - The module works with the file locations.list, whick can be downloaded by [this link](https://drive.google.com/file/d/11KVCDMVb8H0vKzb8bx7VvqOlBUxUfL6x/view?usp=sharing), but there is also its smaller version [test2.txt](https://github.com/alorthius/lab_1_html_map/blob/main/test2.txt) - a chunk of the main database in order to make the programm work faster. Also, it uses side libraries, such as *geopy* and *folium*. Check [requirements.txt](https://github.com/alorthius/lab_1_html_map/blob/main/requirements.txt) for all the requirements.
 
+----
+
 ## Module run example:
 ```
 Type the year of film release: 2010
@@ -16,13 +18,15 @@ The final output map (created on a smaller database [test2.txt](https://github.c
 
 ![image](https://user-images.githubusercontent.com/73172589/108108684-9d855400-7099-11eb-8679-7c639d6e1158.png)
 
+----
+
 ## HTML document structure:
 
-The row `<!DOCTYPE html>` states that this document is an HTML one.
-The `<head>` element contains other elements and scripts, that are not visible for user (except for `<title>`).
-The `<title>` element specifies a title for the document.
-The `<body>` element is a container for all the visible contents of the document.
-`<meta>` defines metatages that are used to store the information for browser.
-`<style>` defines style of the elements of the document.
-`<script>` describes the scripts, can also contains link to the programm or the programm itself.
-`<link>` allows the authors to link their document to other resources.
+- The row `<!DOCTYPE html>` states that this document is an HTML one.
+- The `<head>` element contains other elements and scripts, that are not visible for user (except for `<title>`).
+- The `<title>` element specifies a title for the document.
+- The `<body>` element is a container for all the visible contents of the document.
+- `<meta>` defines metatages that are used to store the information for browser.
+- `<style>` defines style of the elements of the document.
+- `<script>` describes the scripts, can also contains link to the programm or the programm itself.
+- `<link>` allows the authors to link their document to other resources.
